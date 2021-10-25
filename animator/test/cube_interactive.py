@@ -444,14 +444,14 @@ if __name__ == '__main__':
     c = Cube(N)
 
     # do a 3-corner swap
-    # c.rotate_face('R')
-    # c.rotate_face('D')
-    # c.rotate_face('R', -1)
-    # c.rotate_face('U', -1)
-    # c.rotate_face('R')
-    # c.rotate_face('D', -1)
-    # c.rotate_face('R', -1)
-    # c.rotate_face('U')
+    c.rotate_face('R')
+    c.rotate_face('D')
+    c.rotate_face('R', -1)
+    c.rotate_face('U', -1)
+    c.rotate_face('R')
+    c.rotate_face('D', -1)
+    c.rotate_face('R', -1)
+    c.rotate_face('U')
 
     c.draw_interactive()
 
