@@ -2,6 +2,7 @@ from rubik.cube import Cube
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # This import registers the 3D projection, but is otherwise unused.
 from mpl_toolkits.mplot3d import Axes3D, art3d
 
@@ -13,7 +14,14 @@ cube1 = (x < 3) & (y < 3) & (z < 3)
 
 # set the colors of each object
 colors = np.empty(cube1.shape, dtype=object)
-colors[cube1] = ['red']
+colors[0] = ['red']
+colors[0][1][0] = ['violet']
+colors[1] = ['green']
+colors[2]= ['yellow']
+#colors[3]= ['black']
+#colors[4]= ['white']
+#colors[5]= ['orange']
+
 
 # and plot everything
 fig = plt.figure()
