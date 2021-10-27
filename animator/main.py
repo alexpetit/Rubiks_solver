@@ -70,12 +70,11 @@ class Cube():
         glPopMatrix()
 
 class EntireCube():
-    def __init__(self, N, scale,i, j):
+    def __init__(self, N, scale,i):
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
         self.i = i
-        self.j = j
         self.rot_solve, self.rot_init = give_key()
         self.isInit = False
 
@@ -116,7 +115,6 @@ class EntireCube():
 
                 if ev.type == KEYDOWN:
                     if ev.key == pygame.K_RETURN :
-                         #   for j in range(len(rot_slice_map)) :
                          if self.i < len(self.rot_solve) :
                             animate,action = True,rot_slice_map2[self.rot_solve[self.i]]
                             self.i += 1
@@ -183,7 +181,7 @@ def main():
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    NewEntireCube = EntireCube(3, 1.5,0, 0)
+    NewEntireCube = EntireCube(3, 1.5, 0)
     NewEntireCube.mainloop()
 
 if __name__ == '__main__':
