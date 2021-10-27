@@ -37,8 +37,6 @@ def give_key():
         else:
             index = keypad_code_double.index(touch)
             touches_to_press_mix.append(F[index])
-    print(touches_to_press_solve)
-    print(touches_to_press_mix)
     return touches_to_press_solve, touches_to_press_mix
 
 

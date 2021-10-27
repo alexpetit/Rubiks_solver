@@ -98,8 +98,6 @@ class EntireCube():
         animate, animate_ang, animate_speed = False, 0, 10
         action = (0, 0, 0)
         color = (60, 60, 60)
-        #width = screen.get_width()
-        #height = screen.get_height()
         # defining a font
         smallfont = pygame.font.SysFont('Corbel', 35)
         # rendering a text written in
@@ -107,8 +105,6 @@ class EntireCube():
         text = smallfont.render('quit', True, color)
         # the variable as a tuple
         mouse = pygame.mouse.get_pos()
-        #pygame.display.set_caption("tape tape")
-        #pygame.display.blit(text, (450 / 2 + 50, 450 / 2))
 
         while True:
             # ici faire une boucle avec les données récupérer par kocimba
@@ -117,13 +113,6 @@ class EntireCube():
                 if ev .type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                # checks if a mouse is clicked
-                """if ev.type == pygame.MOUSEBUTTONDOWN:
-
-                    # if the mouse is clicked on the
-                    # button the game is terminated
-                    if width / 2 <= mouse[0] <= width / 2 + 140 and height / 2 <= mouse[1] <= height / 2 + 40:
-                        pygame.quit()"""
 
                 if ev.type == KEYDOWN:
                     if ev.key == pygame.K_RETURN :
@@ -156,7 +145,6 @@ class EntireCube():
                 if animate_ang >= 90:
                     for cube in self.cubes:
                         cube.update(*action)
-
                     animate, animate_ang = False, 0
 
             #initialisation of the cube
@@ -173,8 +161,6 @@ class EntireCube():
                cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)
             if animate:
                 animate_ang += animate_speed
-
-            #self.cubes[0].draw(colors2, surfaces, vertices, animate, animate_ang, *action)
 
             pygame.display.flip()
             pygame.time.wait(10)
