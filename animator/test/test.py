@@ -199,7 +199,7 @@ def cube_axes(N=1, **kwargs):
             for theta in (np.pi / 2, -np.pi / 2)]
     rots += [Quaternion.from_v_theta(y, theta)
              for theta in (np.pi / 2, -np.pi / 2, np.pi, 2 * np.pi)]
-
+    print(rots)
     cubie_width = 2. / N
     translations = np.array([[-1 + (i + 0.5) * cubie_width,
                               -1 + (j + 0.5) * cubie_width, 0]
@@ -233,4 +233,6 @@ def cube_axes(N=1, **kwargs):
 if __name__ == '__main__':
     fig = plt.figure(figsize=(5, 5))
     fig.add_axes(cube_axes(N=3, fig=fig))
+
+
     plt.show()
