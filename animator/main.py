@@ -1,23 +1,5 @@
 from imports import *
 
-def monkeypatch_ctypes():
-    import os
-    import ctypes.util
-    uname = os.uname()
-    if uname.sysname == "Darwin" and uname.release >= "20.":
-        real_find_library = ctypes.util.find_library
-        def find_library(name):
-            if name in {"OpenGL", "GLUT"}:  # add more names here if necessary
-                return f"/System/Library/Frameworks/{name}.framework/{name}"
-            return real_find_library(name)
-        ctypes.util.find_library = find_library
-    return \
-
-monkeypatch_ctypes()
-
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
 vertices = (
     ( 1, -1, -1), ( 1,  1, -1), (-1,  1, -1), (-1, -1, -1),
     ( 1, -1,  1), ( 1,  1,  1), (-1, -1,  1), (-1,  1,  1)
@@ -92,14 +74,10 @@ class EntireCube():
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
-        #self.cubes[0].update(1, 0, 1)
-        #self.cubes[0].transformMat()
         self.i = i
         self.j = j
-    def recup_donnees(self):
-        chemin_entree = [K_1, K_F4, K_8, K_8, K_F4]
-        for j in chemin_entree:
-            action = chemin_entree[chemin_entree[j]]
+        self.rot_solve, self.rot_init = give_key()
+        self.isInit = False
 
     def mainloop(self):
 
@@ -116,7 +94,6 @@ class EntireCube():
             'K_F1': (0, 0, -1), 'K_F2': (0, 1, -1), 'K_F3': (0, 2, -1), 'K_F4': (1, 0, -1), 'K_F5': (1, 1, -1),
             'K_F6': (1, 2, -1), 'K_F7': (2, 0, -1), 'K_F8': (2, 1, -1), 'K_F9': (2, 2, -1),
         }
-        rot_solve, rot_init = give_key()
         ang_x, ang_y, rot_cube = 0, 0, (0, 0)
         animate, animate_ang, animate_speed = False, 0, 10
         action = (0, 0, 0)
@@ -133,11 +110,6 @@ class EntireCube():
         #pygame.display.set_caption("tape tape")
         #pygame.display.blit(text, (450 / 2 + 50, 450 / 2))
 
-        #initialisation cube
-        """chemin_entree = [K_1, K_F4, K_8, K_8, K_F4]
-        for j in chemin_entree:
-            action = rot_slice_map[rot_intial[j]]
-            cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)"""
         while True:
             # ici faire une boucle avec les données récupérer par kocimba
             for ev in pygame.event.get():
@@ -153,17 +125,12 @@ class EntireCube():
                     if width / 2 <= mouse[0] <= width / 2 + 140 and height / 2 <= mouse[1] <= height / 2 + 40:
                         pygame.quit()"""
 
-
                 if ev.type == KEYDOWN:
                     if ev.key == pygame.K_RETURN :
                          #   for j in range(len(rot_slice_map)) :
-                         if self.i < len(rot_solve) :
-                            animate,action = True,rot_slice_map2[rot_solve[self.i]]
+                         if self.i < len(self.rot_solve) :
+                            animate,action = True,rot_slice_map2[self.rot_solve[self.i]]
                             self.i += 1
-                    if ev.key == pygame.K_SPACE:
-                        if self.j < len(rot_solve):
-                            animate, action = True, rot_slice_map2[rot_init[self.j]]
-                            self.j += 1
                     if ev.key in rot_cube_map:
                         rot_cube = rot_cube_map[ev.key]
                     if not animate and ev.key in rot_slice_map:
@@ -189,7 +156,18 @@ class EntireCube():
                 if animate_ang >= 90:
                     for cube in self.cubes:
                         cube.update(*action)
+
                     animate, animate_ang = False, 0
+
+            #initialisation of the cube
+            if not self.isInit:
+                actions = []
+                for rot in self.rot_init:
+                    actions.append(rot_slice_map2[rot])
+                for cube in self.cubes:
+                    for action in actions:
+                        cube.update(*action)
+                self.isInit = True
 
             for cube in self.cubes:
                cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)
