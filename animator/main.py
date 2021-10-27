@@ -5,7 +5,8 @@ import random
 from pygame.locals import *
 from tkinter import *
 import random
-
+import kociemba
+from test import give_key
 
 def monkeypatch_ctypes():
     import os
@@ -42,6 +43,12 @@ B = (0, 0, 1)
 colors = (R, G, O, Y, W, B,
         )
 colors2 = (B,B,B,B,B,B)
+rot_slice_map = {
+    K_1: (0, 0, 1), K_2: (0, 1, 1), K_3: (0, 2, 1), K_4: (1, 0, 1), K_5: (1, 1, 1),
+    K_6: (1, 2, 1), K_7: (2, 0, 1), K_8: (2, 1, 1), K_9: (2, 2, 1),
+    K_F1: (0, 0, -1), K_F2: (0, 1, -1), K_F3: (0, 2, -1), K_F4: (1, 0, -1), K_F5: (1, 1, -1),
+    K_F6: (1, 2, -1), K_F7: (2, 0, -1), K_F8: (2, 1, -1), K_F9: (2, 2, -1),
+}
 class Cube():
     def __init__(self, id, N, scale):
         self.N = N
@@ -87,12 +94,18 @@ class Cube():
         glPopMatrix()
 
 class EntireCube():
-    def __init__(self, N, scale):
+    def __init__(self, N, scale,i ):
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
-        self.cubes[0].update(1, 0, 1)
-        self.cubes[0].transformMat()
+        #self.cubes[0].update(1, 0, 1)
+        #self.cubes[0].transformMat()
+        self.i = i
+    def recup_donnees(self):
+        chemin_entree = [K_1, K_F4, K_8, K_8, K_F4]
+        for j in chemin_entree:
+            action = chemin_entree[chemin_entree[j]]
+
     def mainloop(self):
 
         rot_cube_map  = { K_UP: (-1, 0), K_DOWN: (1, 0), K_LEFT: (0, -1), K_RIGHT: (0, 1)}
@@ -102,7 +115,14 @@ class EntireCube():
             K_F1: (0, 0, -1), K_F2: (0, 1, -1), K_F3: (0, 2, -1), K_F4: (1, 0, -1), K_F5: (1, 1, -1),
             K_F6: (1, 2, -1), K_F7: (2, 0, -1), K_F8: (2, 1, -1), K_F9: (2, 2, -1),
         }
-
+        rot_slice_map2 = {
+            'K_1': (0, 0, 1), 'K_2': (0, 1, 1), 'K_3': (0, 2, 1), 'K_4': (1, 0, 1), 'K_5': (1, 1, 1),
+            'K_6': (1, 2, 1), 'K_7': (2, 0, 1), 'K_8': (2, 1, 1), 'K_9': (2, 2, 1),
+            'K_F1': (0, 0, -1), 'K_F2': (0, 1, -1), 'K_F3': (0, 2, -1), 'K_F4': (1, 0, -1), 'K_F5': (1, 1, -1),
+            'K_F6': (1, 2, -1), 'K_F7': (2, 0, -1), 'K_F8': (2, 1, -1), 'K_F9': (2, 2, -1),
+        }
+        rot_init = give_key()[1]
+        rot_solve = give_key()[0]
         ang_x, ang_y, rot_cube = 0, 0, (0, 0)
         animate, animate_ang, animate_speed = False, 0, 10
         action = (0, 0, 0)
@@ -118,6 +138,12 @@ class EntireCube():
         mouse = pygame.mouse.get_pos()
         #pygame.display.set_caption("tape tape")
         #pygame.display.blit(text, (450 / 2 + 50, 450 / 2))
+
+        #initialisation cube
+        """chemin_entree = [K_1, K_F4, K_8, K_8, K_F4]
+        for j in chemin_entree:
+            action = rot_slice_map[rot_intial[j]]
+            cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)"""
         while True:
             # ici faire une boucle avec les données récupérer par kocimba
             for ev in pygame.event.get():
@@ -137,9 +163,13 @@ class EntireCube():
 
                 if ev.type == KEYDOWN:
                     if ev.key == pygame.K_RETURN :
-                        print("la")
-                        animate,action = True,rot_slice_map[49]
-                        print(ev.key)
+                         #   for j in range(len(rot_slice_map)) :
+                         if self.i < len(rot_solve) :
+                            print(rot_slice_map2[rot_solve[self.i]])
+                            animate,action = True,rot_slice_map2[rot_solve[self.i]]
+                            print(ev.key)
+                            self.i += 1
+
                     if ev.key in rot_cube_map:
                         rot_cube = rot_cube_map[ev.key]
                     if not animate and ev.key in rot_slice_map:
@@ -148,8 +178,6 @@ class EntireCube():
                 if ev.type == KEYUP:
                     if ev.key in rot_cube_map:
                         rot_cube = (0, 0)
-            # superimposing the text onto our button
-            #screen.blit(text, (width / 2 + 50, height / 2))
 
             # updates the frames of the game
 
@@ -172,11 +200,11 @@ class EntireCube():
 
             for cube in self.cubes:
                cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)
-
             if animate:
                 animate_ang += animate_speed
 
             #self.cubes[0].draw(colors2, surfaces, vertices, animate, animate_ang, *action)
+
             pygame.display.flip()
             pygame.time.wait(10)
 
@@ -198,7 +226,7 @@ def main():
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    NewEntireCube = EntireCube(3, 1.5)
+    NewEntireCube = EntireCube(3, 1.5,0)
     NewEntireCube.mainloop()
 
 if __name__ == '__main__':
