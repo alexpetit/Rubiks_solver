@@ -1,4 +1,34 @@
-from imports import *
+import tkinter
+import pygame
+import random
+from pygame.locals import *
+from tkinter import *
+import random
+from test import give_key
+
+cube = 'DRFFURLFBDFDDRUUUUUDRBFLULBBULLDFDRFBLFDLDFBRRULBBRRBL'
+
+# function that allows to run OpenGL on MacOS
+def monkeypatch_ctypes():
+    import os
+    import ctypes.util
+    uname = os.uname()
+    if uname.sysname == "Darwin" and uname.release >= "20.":
+        real_find_library = ctypes.util.find_library
+
+        def find_library(name):
+            if name in {"OpenGL", "GLUT"}:  # add more names here if necessary
+                return f"/System/Library/Frameworks/{name}.framework/{name}"
+            return real_find_library(name)
+
+        ctypes.util.find_library = find_library
+    return
+
+
+monkeypatch_ctypes()
+
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 vertices = (
     ( 1, -1, -1), ( 1,  1, -1), (-1,  1, -1), (-1, -1, -1),
@@ -15,6 +45,8 @@ Y = (1, 1, 0)
 W = (1, 1, 1)
 B = (0, 0, 1)
 
+
+#Back, Left, Front, Right, Up, Down
 colors = (Y, B, W, G, R, O)
 
 class Cube():
@@ -67,8 +99,10 @@ class EntireCube():
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
         self.i = i
-        self.rot_solve, self.rot_init = give_key()
+        self.rot_solve, self.rot_init = give_key(cube)
         self.isInit = False
+
+        print(self.rot_solve)
 
     def mainloop(self):
 
@@ -119,6 +153,16 @@ class EntireCube():
                     if ev.key in rot_cube_map:
                         rot_cube = (0, 0)
 
+            #initialisation of the cube
+            if not self.isInit:
+                actions = []
+                for rot in self.rot_init:
+                    actions.append(rot_slice_map2[rot])
+                for cube in self.cubes:
+                    for action in actions:
+                        cube.update(*action)
+                self.isInit = True
+
             # updates the frames of the game
 
             ang_x += rot_cube[0]*2
@@ -138,16 +182,6 @@ class EntireCube():
                         cube.update(*action)
                     animate, animate_ang = False, 0
 
-            #initialisation of the cube
-            if not self.isInit:
-                actions = []
-                for rot in self.rot_init:
-                    actions.append(rot_slice_map2[rot])
-                for cube in self.cubes:
-                    for action in actions:
-                        cube.update(*action)
-                self.isInit = True
-
             for cube in self.cubes:
                cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)
             if animate:
@@ -156,9 +190,7 @@ class EntireCube():
             pygame.display.flip()
             pygame.time.wait(10)
 
-def main():
-
-    #top = tkinter.Tk()
+def display_solution():
     pygame.init()
     display = (800,600)
     screen = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
@@ -169,15 +201,14 @@ def main():
     mouse = pygame.mouse.get_pos()
     pygame.display.set_caption("tape tape")
     screen.blit(text, (450 / 2 + 50, 450 / 2))
-    #button(screen)
 
     glMatrixMode(GL_PROJECTION)
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+    gluPerspective(45, (display[0]/display[1]), 0.5, 50.0)
 
     NewEntireCube = EntireCube(3, 1.5, 0)
     NewEntireCube.mainloop()
 
 if __name__ == '__main__':
-    main()
+    display_solution()
     pygame.quit()
     quit()
