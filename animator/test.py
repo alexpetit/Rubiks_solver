@@ -1,32 +1,73 @@
-from rubik_solver import utils
-
+import kociemba
 def give_key():
 
-    cube = 'wowgybwyogygybyoggrowbrgywrborwggybrbwororbwborgowryby'
-    solution = utils.solve(cube, 'Kociemba')
+    cube = 'DRFFURLFBDFDDRUUUUUDRBFLULBBULLDFDRFBLFDLDFBRRULBBRRBL'
+    cube_solved = 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB'
+
+    solution = kociemba.solve(cube)
+
+    simple = ["R", "L", "D", "U", "B", "F"]
+    inverse = ["R'", "L'", "D'", "U'", "B'", "F'"]
+    double = ["R2", "L2", "D2", "U2", "B2", "F2"]
 
     kociemba_output = ["R'", "R", "L'", "L", "D'", "D", "U'", "U", "B'", "B", "F'", "F"]
 
-    keypad_code = ["K_1", "K_F1", "K_3", "K_F3", "K_4", "K_F4", "K_6", "K_F6", "K_7", "K_F7", "K_9", "K_F9"]
+    keypad_code = ["K_F3", "K_3", "K_F1", "K_1", "K_F4", "K_4", "K_F6", "K_6", "K_F7", "K_7", "K_9", "K_F9"]
 
-    kociemba_output_double = ["R2", "L2", "D2", "U2", "B2", "F2"]
-
-    keypad_code_double = ["K_1", "K_3", "K_4", "K_6", "K_7", "K_9"]
+    keypad_code_double = ["K_3", "K_1", "K_4", "K_6", "K_7", "K_F9"]
 
     touches_to_press_solve = []
+
+    solution = solution.split(' ')
+    solution = list(solution)
+
+    solution_init = []
+
+    for s in solution:
+        if s in simple:
+            index = simple.index(s)
+            solution_init.append(inverse[index])
+        elif s in inverse:
+            index = inverse.index(s)
+            solution_init.append(simple[index])
+        elif s in double:
+            solution_init.append(s)
+
+    solution_init.reverse()
+
+    #solution_init = kociemba.solve(cube_solved, cube)
+    #solution_init = solution_init.split(' ')
+    #solution_init = list(solution_init)
+
+    print(solution)
+    print(solution_init)
 
     for s in solution:
         if s in kociemba_output:
             index = kociemba_output.index(s)
             touches_to_press_solve.append(keypad_code[index])
-        elif s in kociemba_output_double:
-            index = kociemba_output_double.index(s)
+        elif s in double:
+            index = double.index(s)
             touches_to_press_solve.append(keypad_code_double[index])
             touches_to_press_solve.append(keypad_code_double[index])
 
-    reversed_touches = reversed(touches_to_press_solve)
+    touches_to_press_mix = []
 
-    F = ["K_F1", "K_F3", "K_F4", "K_F6", "K_F7", "K_F9"]
+    for s in solution_init:
+        if s in kociemba_output:
+            index = kociemba_output.index(s)
+            touches_to_press_mix.append(keypad_code[index])
+        elif s in double:
+            index = double.index(s)
+            touches_to_press_mix.append(keypad_code_double[index])
+            touches_to_press_mix.append(keypad_code_double[index])
+
+    print(touches_to_press_solve)
+    print(touches_to_press_mix)
+
+    """reversed_touches = reversed(touches_to_press_solve)
+
+    F = ["K_F1", "K_3", "K_F4", "K_6", "K_F7", "K_F9"]
 
     touches_to_press_mix = []
 
@@ -36,7 +77,7 @@ def give_key():
             touches_to_press_mix.append(keypad_code_double[index])
         else:
             index = keypad_code_double.index(touch)
-            touches_to_press_mix.append(F[index])
+            touches_to_press_mix.append(F[index])"""
     return touches_to_press_solve, touches_to_press_mix
 
 
