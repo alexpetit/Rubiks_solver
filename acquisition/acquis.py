@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie2000
-from util import *
+from acquisition.util import *
 
 def acquistion():
     dic_is_acquis= {"green":False,"orange":False,"red":False,"yellow":False,"white":False,"blue":False}
@@ -118,10 +118,6 @@ def acquistion():
                 cv2.waitKey(8000)
 
 
-                
-
-
-        
         cv2.imshow('frame',frame)
         
 

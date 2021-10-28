@@ -1,5 +1,5 @@
 from animator.main import display_solution
-from acquis import *
+from acquisition.acquis import *
 
 # Back, Left, Front, Right, Up, Down
 cube, dict_conv = acquistion()
