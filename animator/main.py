@@ -4,7 +4,7 @@ import random
 from pygame.locals import *
 from tkinter import *
 import random
-from resolver import give_key
+from animator.resolver import give_key
 
 # function that allows to run OpenGL on MacOS
 def monkeypatch_ctypes():
@@ -93,6 +93,7 @@ class Cube():
 
 class EntireCube():
     def __init__(self, N, scale,i, cube, colors):
+        self.colors = colors
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
@@ -181,7 +182,7 @@ class EntireCube():
                     animate, animate_ang = False, 0
 
             for cube in self.cubes:
-               cube.draw(colors, surfaces, vertices, animate, animate_ang, *action)
+               cube.draw(self.colors, surfaces, vertices, animate, animate_ang, *action)
             if animate:
                 animate_ang += animate_speed
 
