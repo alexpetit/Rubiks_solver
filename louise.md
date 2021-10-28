@@ -1,14 +1,14 @@
 **Étapes pour faire fonctionner le Rubik’s Solver :**
 
-télécharger le dossier de code et l’ouvrir dans un IDE python
-créer un virtual environnement et l’activer ( . venv/bin/activate)
-Installer les librairies nécessaires (requirements) : pip install -r requirements.txt
-Exécuter le fichier main.py qui se trouve dans le dossier principal 
+- Télécharger le dossier de code et l’ouvrir dans un IDE python
+- Créer un virtual environnement et l’activer ( . venv/bin/activate)
+- Installer les librairies nécessaires (requirements) : pip install -r requirements.txt
+- Exécuter le fichier main.py qui se trouve dans le dossier principal 
 
 **La partie acquisition se lance :**
 
-Réaliser la calibration de la caméra : montrer les faces du rubik’s cube une à une comme indiqué en haut à gauche de l’écran. 
-Réaliser l’acquisition des faces : les faces sont demandées une à une en haut à gauche selon leur position (front, up, down, right, left, back), et un résumé des faces acquises s’affiche en bas à droite. S’il n’y a pas d’erreur l’acquisition est validée et il suffit d’appuyer sur ‘q’ pour quitter. 
+- Réaliser la calibration de la caméra : montrer les faces du rubik’s cube une à une comme indiqué en haut à gauche de l’écran. 
+- Réaliser l’acquisition des faces : les faces sont demandées une à une en haut à gauche selon leur position (front, up, down, right, left, back), et un résumé des faces acquises s’affiche en bas à droite. S’il n’y a pas d’erreur l’acquisition est validée et il suffit d’appuyer sur ‘q’ pour quitter. 
 
 **La partie Tutoriel se lance:** 
 
