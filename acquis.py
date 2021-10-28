@@ -20,8 +20,8 @@ def acquistion():
 
 
     import cv2
-    vid = cv2.VideoCapture(0) 
-    is_acquis=False;
+    vid = cv2.VideoCapture(1)
+    is_acquis=False
     while(True): 
         
         font = cv2.FONT_HERSHEY_SIMPLEX
