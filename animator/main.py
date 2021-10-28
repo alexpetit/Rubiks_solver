@@ -45,7 +45,7 @@ B = (0, 0, 1)
 
 
 #Back, Left, Front, Right, Up, Down
-colors = (Y, B, W, G, R, O)
+#colors = (O, Y, R, W, G, B)
 
 class Cube():
     def __init__(self, id, N, scale):
@@ -92,7 +92,7 @@ class Cube():
         glPopMatrix()
 
 class EntireCube():
-    def __init__(self, N, scale,i, cube):
+    def __init__(self, N, scale,i, cube, colors):
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
@@ -188,7 +188,7 @@ class EntireCube():
             pygame.display.flip()
             pygame.time.wait(10)
 
-def display_solution(cube):
+def display_solution(cube, colors):
     pygame.init()
     display = (800,600)
     screen = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
@@ -197,17 +197,19 @@ def display_solution(cube):
     text = smallfont.render('quit', True, (60,60,60))
     # the variable as a tuple
     mouse = pygame.mouse.get_pos()
-    pygame.display.set_caption("tape tape")
+    pygame.display.set_caption("Appuyez sur entrée pour montrer l'étape suivante")
     screen.blit(text, (450 / 2 + 50, 450 / 2))
 
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.5, 50.0)
 
-    NewEntireCube = EntireCube(3, 1.5, 0, cube)
+    NewEntireCube = EntireCube(3, 1.5, 0, cube, colors)
     NewEntireCube.mainloop()
     pygame.quit()
     quit()
 
 if __name__ == '__main__':
-    cube = 'DRFFURLFBDFDDRUUUUUDRBFLULBBULLDFDRFBLFDLDFBRRULBBRRBL'
-    display_solution(cube)
+    cube = 'RFBDUBRLRFRDDRLRLFDDUBFFDRDLUBBDFUUUURFLLDBUFLRBUBBLFL'
+    #Back, Left, Front, Right, Up, Down
+    colors = (O, Y, R, W, G, B)
+    display_solution(cube, colors)
