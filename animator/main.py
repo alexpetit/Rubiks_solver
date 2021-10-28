@@ -101,8 +101,6 @@ class EntireCube():
         self.rot_solve, self.rot_init = give_key(cube)
         self.isInit = False
 
-        print(self.rot_solve)
-
     def mainloop(self):
 
         rot_cube_map  = { K_UP: (-1, 0), K_DOWN: (1, 0), K_LEFT: (0, -1), K_RIGHT: (0, 1)}
@@ -141,7 +139,6 @@ class EntireCube():
                 if ev.type == KEYDOWN:
                     if ev.key == pygame.K_RETURN :
                          if self.i < len(self.rot_solve) :
-                            print(" rot_solve :" ,self.rot_solve)
                             animate,action = True,rot_slice_map2[self.rot_solve[self.i]]
                             self.i += 1
                     if ev.key in rot_cube_map:

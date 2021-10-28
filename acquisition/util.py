@@ -7,9 +7,6 @@ from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie2000
 
-
-
-
 class Cube:
 
   def __init__(self,pos_f,pos_d,pos_r,pos_l,pos_u,pos_b):
@@ -42,9 +39,6 @@ class Cube:
     return res
 
 
-
-
-
   def to_kociemba(self):
     dic_convert={}
     res=[]
@@ -53,7 +47,6 @@ class Cube:
     for x in ["U","R","F","D","L","B"]:
       res+=[dic_convert[y] for y in self.dic_faces[x].colors]
     return res,dic_convert
-
 
 
   def draw_patron(self,frame):
@@ -244,4 +237,5 @@ def draw_arrow(frame,orient):
             end_point=(start_point[0],start_point[1]+offset )
         frame= cv2.arrowedLine(frame, start_point, end_point,color, thickness)
     return frame 
+  
     
