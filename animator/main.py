@@ -6,8 +6,6 @@ from tkinter import *
 import random
 from test import give_key
 
-cube = 'DRFFURLFBDFDDRUUUUUDRBFLULBBULLDFDRFBLFDLDFBRRULBBRRBL'
-
 # function that allows to run OpenGL on MacOS
 def monkeypatch_ctypes():
     import os
@@ -94,7 +92,7 @@ class Cube():
         glPopMatrix()
 
 class EntireCube():
-    def __init__(self, N, scale,i):
+    def __init__(self, N, scale,i, cube):
         self.N = N
         cr = range(self.N)
         self.cubes = [Cube((x, y, z), self.N, scale) for x in cr for y in cr for z in cr]
@@ -190,7 +188,7 @@ class EntireCube():
             pygame.display.flip()
             pygame.time.wait(10)
 
-def display_solution():
+def display_solution(cube):
     pygame.init()
     display = (800,600)
     screen = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
@@ -205,10 +203,11 @@ def display_solution():
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.5, 50.0)
 
-    NewEntireCube = EntireCube(3, 1.5, 0)
+    NewEntireCube = EntireCube(3, 1.5, 0, cube)
     NewEntireCube.mainloop()
-
-if __name__ == '__main__':
-    display_solution()
     pygame.quit()
     quit()
+
+if __name__ == '__main__':
+    cube = 'DRFFURLFBDFDDRUUUUUDRBFLULBBULLDFDRFBLFDLDFBRRULBBRRBL'
+    display_solution(cube)
