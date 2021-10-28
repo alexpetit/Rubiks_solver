@@ -35,9 +35,6 @@ def give_key():
 
     solution_init.reverse()
 
-    #solution_init = kociemba.solve(cube_solved, cube)
-    #solution_init = solution_init.split(' ')
-    #solution_init = list(solution_init)
 
     print(solution)
     print(solution_init)
@@ -65,19 +62,6 @@ def give_key():
     print(touches_to_press_solve)
     print(touches_to_press_mix)
 
-    """reversed_touches = reversed(touches_to_press_solve)
-
-    F = ["K_F1", "K_3", "K_F4", "K_6", "K_F7", "K_F9"]
-
-    touches_to_press_mix = []
-
-    for touch in reversed_touches:
-        if touch in F:
-            index = F.index(touch)
-            touches_to_press_mix.append(keypad_code_double[index])
-        else:
-            index = keypad_code_double.index(touch)
-            touches_to_press_mix.append(F[index])"""
     return touches_to_press_solve, touches_to_press_mix
 
 

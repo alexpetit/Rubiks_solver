@@ -113,8 +113,8 @@ class EntireCube():
                             self.i += 1
                     if ev.key in rot_cube_map:
                         rot_cube = rot_cube_map[ev.key]
-                    if not animate and ev.key in rot_slice_map:
-                        animate, action = True, rot_slice_map[ev.key]
+                    """if not animate and ev.key in rot_slice_map:
+                        animate, action = True, rot_slice_map[ev.key]"""
                 if ev.type == KEYUP:
                     if ev.key in rot_cube_map:
                         rot_cube = (0, 0)
