@@ -4,7 +4,7 @@ import random
 from pygame.locals import *
 from tkinter import *
 import random
-from test import give_key
+from resolver import give_key
 
 # function that allows to run OpenGL on MacOS
 def monkeypatch_ctypes():
