@@ -1,4 +1,5 @@
-from animator.main import display_solution
+#from animator.main import display_solution
+from acquis import *
 
 R = (1, 0, 0)
 G = (0, 1, 0)
@@ -10,4 +11,8 @@ B = (0, 0, 1)
 cube = 'RFBDUBRLRFRDDRLRLFDDUBFFDRDLUBBDFUUUURFLLDBUFLRBUBBLFL'
 # Back, Left, Front, Right, Up, Down
 colors = (O, Y, R, W, G, B)
-display_solution(cube, colors)
+cube, dict_conv = acquistion()
+
+print(dict_conv)
+print(cube)
+#display_solution(cube, colors)
