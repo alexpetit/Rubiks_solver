@@ -1,4 +1,7 @@
 # Rubiks_solver
+
+**HAMDOUCH Réda - PAUBLANT Julien - PETIT Alexandre - SALIBA Louise**
+
 Resolution of a Rubik's cube with a live display
 Movie presentation : https://drive.google.com/file/d/1Fb_B88P7SXOi7BoVRq54Ou3oryQ3pcuv/view?usp=sharing
 
